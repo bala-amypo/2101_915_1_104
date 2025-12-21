@@ -10,32 +10,36 @@ import java.util.List;
 @Service
 public class EmployeeProfileServiceImpl implements EmployeeProfileService {
 
-    private final List<EmployeeProfile> employees = new ArrayList<>();
+    private final List<EmployeeProfile> store = new ArrayList<>();
 
     @Override
-    public EmployeeProfile createEmployee(EmployeeProfile employee) {
-        employees.add(employee);
+    public EmployeeProfile create(EmployeeProfile employee) {
+        store.add(employee);
         return employee;
     }
 
     @Override
-    public EmployeeProfile getEmployeeById(Long id) {
-        return employees.stream()
+    public EmployeeProfile getById(Long id) {
+        return store.stream()
                 .filter(e -> e.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
 
     @Override
-    public List<EmployeeProfile> getAllEmployees() {
-        return employees;
+    public List<EmployeeProfile> getAll() {
+        return store;
     }
 
     @Override
-    public void updateEmployeeStatus(Long id, boolean active) {
-        employees.stream()
-                .filter(e -> e.getId().equals(id))
-                .findFirst()
-                .ifPresent(e -> e.setActive(active));
+    public EmployeeProfile update(Long id, EmployeeProfile employee) {
+        delete(id);
+        store.add(employee);
+        return employee;
+    }
+
+    @Override
+    public void delete(Long id) {
+        store.removeIf(e -> e.getId().equals(id));
     }
 }
