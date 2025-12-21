@@ -1,13 +1,13 @@
-package com.example.device.controller;
+package com.example.demo.controller;
 
-import com.example.device.model.IssuedDeviceRecord;
-import com.example.device.service.IssuedDeviceRecordService;
+import com.example.demo.model.IssuedDeviceRecord;
+import com.example.demo.service.IssuedDeviceRecordService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/issued-devices")
+@RequestMapping("/issued-devices")
 public class IssuedDeviceRecordController {
 
     private final IssuedDeviceRecordService service;
@@ -17,17 +17,12 @@ public class IssuedDeviceRecordController {
     }
 
     @PostMapping
-    public IssuedDeviceRecord issueDevice(@RequestBody IssuedDeviceRecord record) {
-        return service.issueDevice(record);
+    public IssuedDeviceRecord create(@RequestBody IssuedDeviceRecord record) {
+        return service.create(record);
     }
 
-    @PutMapping("/{id}/return")
-    public void returnDevice(@PathVariable Long id) {
-        service.returnDevice(id);
-    }
-
-    @GetMapping("/employee/{employeeId}")
-    public List<IssuedDeviceRecord> getByEmployee(@PathVariable Long employeeId) {
-        return service.getIssuedDevicesByEmployee(employeeId);
+    @GetMapping
+    public List<IssuedDeviceRecord> getAll() {
+        return service.getAll();
     }
 }
