@@ -1,7 +1,7 @@
-package com.example.demo.service;
+package com.example.employee.service;
 
 import java.util.List;
-import com.example.demo.model.EmployeeProfile;
+import com.example.employee.model.EmployeeProfile;
 
 public interface EmployeeProfileService {
 

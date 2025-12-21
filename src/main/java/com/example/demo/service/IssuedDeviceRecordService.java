@@ -1,7 +1,7 @@
-package com.example.demo.service;
+package com.example.device.service;
 
 import java.util.List;
-import com.example.demo.model.IssuedDeviceRecord;
+import com.example.device.model.IssuedDeviceRecord;
 
 public interface IssuedDeviceRecordService {
 
