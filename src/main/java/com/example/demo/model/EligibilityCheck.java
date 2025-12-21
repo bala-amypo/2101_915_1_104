@@ -2,16 +2,31 @@ package com.example.demo.model;
 
 public class EligibilityCheck {
 
-    private Long id;
+    private Long employeeId;
+    private Long deviceItemId;
+    private boolean eligible;
 
-    public EligibilityCheck() {
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
-    public Long getId() {
-        return id;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getDeviceItemId() {
+        return deviceItemId;
+    }
+
+    public void setDeviceItemId(Long deviceItemId) {
+        this.deviceItemId = deviceItemId;
+    }
+
+    public boolean isEligible() {
+        return eligible;
+    }
+
+    public void setEligible(boolean eligible) {
+        this.eligible = eligible;
     }
 }
