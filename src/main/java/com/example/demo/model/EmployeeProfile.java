@@ -1,4 +1,4 @@
-package com.example.employee.entity;
+package com.example.employee.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;

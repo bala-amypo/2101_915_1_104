@@ -1,4 +1,4 @@
-package com.examly.springapp.model;
+package com.example.user.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

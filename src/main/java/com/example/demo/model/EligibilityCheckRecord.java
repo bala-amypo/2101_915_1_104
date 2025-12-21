@@ -1,4 +1,4 @@
-package com.example.eligibility.entity;
+package com.example.eligibility.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;

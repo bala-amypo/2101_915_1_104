@@ -1,4 +1,4 @@
-package com.example.policy.entity;
+package com.example.policy.model;
 
 import jakarta.persistence.*;
 
