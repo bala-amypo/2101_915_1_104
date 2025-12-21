@@ -15,17 +15,13 @@ public class DeviceCatalogItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     @Column(nullable = false)
     private String deviceCode;
 
-    @NotBlank
     private String deviceType;
 
-    @NotBlank
     private String model;
 
-    @Min(1)
     @Column(nullable = false)
     private Integer maxAllowedPerEmployee;
 
