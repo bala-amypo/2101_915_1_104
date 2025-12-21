@@ -1,4 +1,4 @@
-package com.example.auth.entity;
+package com.examly.springapp.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -20,7 +20,7 @@ public class UserAccount {
     private String passwordHash;
 
     @Column(nullable = false)
-    private String role; // ADMIN / IT_OPERATOR / AUDITOR
+    private String role;
 
     @Column(nullable = false)
     private Boolean active = true;
