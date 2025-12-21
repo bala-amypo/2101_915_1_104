@@ -1,7 +1,7 @@
 package com.example.user.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
+
 
 @Entity
 public class UserAccount {
@@ -12,7 +12,7 @@ public class UserAccount {
 
     private String fullName;
 
-    @Email
+
     @Column(nullable = false)
     private String email;
 
