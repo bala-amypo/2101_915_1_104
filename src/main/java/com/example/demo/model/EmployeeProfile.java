@@ -28,12 +28,11 @@ public class EmployeeProfile {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
-        @PrePersist
+    @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
