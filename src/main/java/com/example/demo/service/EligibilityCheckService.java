@@ -1,7 +1,7 @@
-package com.example.eligibility.service;
+package com.example.demo.service;
 
 import java.util.List;
-import com.example.eligibility.model.EligibilityCheck;
+import com.example.demo.model.EligibilityCheck;
 
 public interface EligibilityCheckService {
 
