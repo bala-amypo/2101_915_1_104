@@ -1,7 +1,7 @@
-package com.example.demo.service;
+package com.example.policy.service;
 
 import java.util.List;
-import com.example.demo.model.PolicyRule;
+import com.example.policy.model.PolicyRule;
 
 public interface PolicyRuleService {
 
