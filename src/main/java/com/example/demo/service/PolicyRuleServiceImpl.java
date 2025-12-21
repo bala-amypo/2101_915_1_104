@@ -6,28 +6,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PolicyRuleServiceImpl implements PolicyRuleService {
 
+    // For simplicity, using in-memory list; replace with repository in real project
     private final List<PolicyRule> rules = new ArrayList<>();
 
     @Override
-    public PolicyRule createRule(PolicyRule rule) {
-        rules.add(rule);
-        return rule;
+    public PolicyRule create(PolicyRule policyRule) {
+        rules.add(policyRule);
+        return policyRule;
     }
 
     @Override
-    public List<PolicyRule> getActiveRules() {
-        return rules.stream()
-                .filter(PolicyRule::isActive)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<PolicyRule> getAllRules() {
-        return rules;
+    public List<PolicyRule> getAll() {
+        return new ArrayList<>(rules);
     }
 }
