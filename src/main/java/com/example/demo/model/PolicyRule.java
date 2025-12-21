@@ -1,20 +1,15 @@
 package com.example.policy.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(
-    name = "policy_rule",
-    uniqueConstraints = @UniqueConstraint(columnNames = "ruleCode")
-)
+
 public class PolicyRule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     @Column(nullable = false)
     private String ruleCode;
 
@@ -29,7 +24,6 @@ public class PolicyRule {
     @Column(nullable = false)
     private Boolean active = true;
 
-    // Getters and Setters
     public Long getId() {
     return id;
 }

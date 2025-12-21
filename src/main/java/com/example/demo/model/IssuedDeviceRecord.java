@@ -4,12 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(
-    name = "issued_device_record",
-    uniqueConstraints = @UniqueConstraint(
-        columnNames = {"employeeId", "deviceItemId", "returnedDate"}
-    )
-)
+
 public class IssuedDeviceRecord {
 
     @Id
@@ -36,7 +31,6 @@ public class IssuedDeviceRecord {
         this.status = (returnedDate == null) ? "ISSUED" : "RETURNED";
     }
 
-    // Getters and Setters
     public Long getId() {
     return id;
 }

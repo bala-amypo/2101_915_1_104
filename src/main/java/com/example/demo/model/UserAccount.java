@@ -19,11 +19,9 @@ public class UserAccount {
     private String fullName;
 
     @Email
-    @NotBlank
     @Column(nullable = false)
     private String email;
 
-    @NotBlank
     @Column(nullable = false)
     private String passwordHash;
 
@@ -33,7 +31,6 @@ public class UserAccount {
     @Column(nullable = false)
     private Boolean active = true;
 
-    // Getters and Setters
     public Long getId() {
     return id;
 }

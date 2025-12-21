@@ -1,14 +1,9 @@
 package com.example.device.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(
-    name = "device_catalog_item",
-    uniqueConstraints = @UniqueConstraint(columnNames = "deviceCode")
-)
+
 public class DeviceCatalogItem {
 
     @Id

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "eligibility_check_record")
 public class EligibilityCheckRecord {
 
     @Id
@@ -30,7 +29,6 @@ public class EligibilityCheckRecord {
         this.checkedAt = LocalDateTime.now();
     }
 
-    // Getters and Setters
     public Long getId() {
     return id;
 }
