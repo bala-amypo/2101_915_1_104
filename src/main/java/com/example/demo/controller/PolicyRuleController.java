@@ -1,7 +1,7 @@
-package com.example.demo.controller;
+package com.example.policy.controller;
 
-import com.example.demo.model.PolicyRule;
-import com.example.demo.service.PolicyRuleService;
+import com.example.policy.model.PolicyRule;
+import com.example.policy.service.PolicyRuleService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

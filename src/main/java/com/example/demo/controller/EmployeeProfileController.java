@@ -1,7 +1,7 @@
-package com.example.demo.controller;
+package com.example.employee.controller;
 
-import com.example.demo.model.EmployeeProfile;
-import com.example.demo.service.EmployeeProfileService;
+import com.example.employee.model.EmployeeProfile;
+import com.example.employee.service.EmployeeProfileService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
