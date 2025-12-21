@@ -1,11 +1,30 @@
-package com.example.demo.service;
+package com.example.demo.controller;
+
+import com.example.demo.model.EligibilityCheck;
+import com.example.demo.service.EligibilityCheckService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import com.example.demo.model.EligibilityCheck;
 
-public interface EligibilityCheckService {
+@RestController
+@RequestMapping("/api/eligibility")
+public class EligibilityCheckController {
 
-    boolean validateEligibility(Long employeeId, Long deviceItemId);
+    private final EligibilityCheckService service;
 
-    List<EligibilityCheck> getChecksByEmployee(Long employeeId);
+    public EligibilityCheckController(EligibilityCheckService service) {
+        this.service = service;
+    }
+
+    @PostMapping("/validate/{employeeId}/{deviceItemId}")
+    public boolean validate(
+            @PathVariable Long employeeId,
+            @PathVariable Long deviceItemId) {
+        return service.validateEligibility(employeeId, deviceItemId);
+    }
+
+    @GetMapping("/employee/{employeeId}")
+    public List<EligibilityCheck> getChecks(@PathVariable Long employeeId) {
+        return service.getChecksByEmployee(employeeId);
+    }
 }
