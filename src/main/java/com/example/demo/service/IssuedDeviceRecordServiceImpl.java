@@ -19,7 +19,7 @@ public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService 
     }
 
     @Override
-    public List<IssuedDeviceRecord> findAll() {
+    public List<IssuedDeviceRecord> getAll() {
         return store;
     }
 }

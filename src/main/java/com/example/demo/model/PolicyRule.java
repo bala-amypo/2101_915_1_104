@@ -1,13 +1,50 @@
 package com.example.demo.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class PolicyRule {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean active;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    private String name;
+    private String description;
 
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
+    // Constructors
+    public PolicyRule() {}
+
+    public PolicyRule(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
