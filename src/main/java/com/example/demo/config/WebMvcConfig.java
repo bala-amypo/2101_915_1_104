@@ -15,4 +15,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedHeaders("*");
     }
 }
-curl http://localhost:9001/api/devices
+
