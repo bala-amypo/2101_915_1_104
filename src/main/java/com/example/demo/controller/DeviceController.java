@@ -13,7 +13,6 @@ public class DeviceController {
         return ResponseEntity.ok(request);
     }
 
-    // matches your JSON body shape
     public static class DeviceRequest {
         private Long id;
         private String deviceCode;
