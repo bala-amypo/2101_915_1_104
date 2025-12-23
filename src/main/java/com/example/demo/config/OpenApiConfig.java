@@ -17,4 +17,4 @@ public class OpenApiConfig {
                         new Server().url("https://9001.408procr.amypo.ai/")
                 ));
         }
-}
+}ps -ef | grep java
