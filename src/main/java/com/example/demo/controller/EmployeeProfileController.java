@@ -2,14 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.model.EmployeeProfile;
 import com.example.demo.service.EmployeeProfileService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/api/employees")
 public class EmployeeProfileController {
-
     private final EmployeeProfileService service;
 
     public EmployeeProfileController(EmployeeProfileService service) {
@@ -17,17 +15,12 @@ public class EmployeeProfileController {
     }
 
     @PostMapping
-    public EmployeeProfile create(@RequestBody EmployeeProfile employee) {
-        return service.create(employee);
+    public ResponseEntity<EmployeeProfile> create(@RequestBody EmployeeProfile employee) {
+        return ResponseEntity.ok(service.createEmployee(employee));
     }
 
     @GetMapping("/{id}")
-    public EmployeeProfile getById(@PathVariable Long id) {
-        return service.getById(id);
-    }
-
-    @GetMapping
-    public List<EmployeeProfile> getAll() {
-        return service.getAll();
+    public ResponseEntity<EmployeeProfile> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getEmployeeById(id));
     }
 }

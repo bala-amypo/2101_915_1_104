@@ -1,17 +1,32 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "employee_profiles")
+@Data
 public class EmployeeProfile {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+
+    @Column(unique = true, nullable = false)
+    private String employeeId;
+
+    private String fullName;
+    
+    @Column(unique = true)
+    private String email;
+    
     private String department;
+    private String jobRole;
+    private boolean active = true;
+    private LocalDateTime createdAt;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public String getDepartment() { return department; }
-    public void setDepartment(String department) { this.department = department; }
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }

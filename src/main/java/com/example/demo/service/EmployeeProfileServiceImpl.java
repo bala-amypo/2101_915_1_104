@@ -1,45 +1,34 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.EmployeeProfile;
+import com.example.demo.repository.EmployeeProfileRepository;
 import com.example.demo.service.EmployeeProfileService;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class EmployeeProfileServiceImpl implements EmployeeProfileService {
+    private final EmployeeProfileRepository repository;
 
-    private final List<EmployeeProfile> store = new ArrayList<>();
-
-    @Override
-    public EmployeeProfile create(EmployeeProfile employee) {
-        store.add(employee);
-        return employee;
+    // Mandatory Constructor Injection
+    public EmployeeProfileServiceImpl(EmployeeProfileRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public EmployeeProfile getById(Long id) {
-        return store.stream()
-                .filter(e -> e.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+    public EmployeeProfile createEmployee(EmployeeProfile employee) {
+        if (repository.findByEmployeeId(employee.getEmployeeId()) != null) {
+            throw new BadRequestException("EmployeeId already exists");
+        }
+        return repository.save(employee);
     }
 
     @Override
-    public List<EmployeeProfile> getAll() {
-        return store;
-    }
-
-    @Override
-    public EmployeeProfile update(Long id, EmployeeProfile employee) {
-        delete(id);
-        store.add(employee);
-        return employee;
-    }
-
-    @Override
-    public void delete(Long id) {
-        store.removeIf(e -> e.getId().equals(id));
+    public EmployeeProfile getEmployeeById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
     }
 }
