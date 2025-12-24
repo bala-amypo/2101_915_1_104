@@ -4,16 +4,16 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import java.util.List;
 
 @Configuration
 public class OpenApiConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .servers(List.of(
-                        new Server().url("https://9114.408procr.amypo.ai/")
-                ));
-        }
+        Server server = new Server();
+        server.setUrl("http://localhost:8080");
+        server.setDescription("Local Server");
+
+        return new OpenAPI().addServersItem(server);
+    }
 }
