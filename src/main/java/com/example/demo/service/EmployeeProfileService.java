@@ -9,6 +9,6 @@ public interface EmployeeProfileService {
     List<EmployeeProfile> getAllEmployees();
     void delete(Long id);
     EmployeeProfile updateEmployeeStatus(Long id, boolean active);
-    // This was missing and causing the "not abstract" error
+    // This MUST exist to satisfy the compiler
     EmployeeProfile update(Long id, EmployeeProfile employee);
 }
