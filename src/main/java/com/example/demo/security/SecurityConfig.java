@@ -22,37 +22,40 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
-    // 🔐 Password encoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // 🔑 Authentication manager
     @Bean
     public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
+            AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
-    // 🛡️ Security filter chain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+            // 🔥 HARD CORS ENABLE
+            .cors(cors -> {})
+
+            // 🔥 DISABLE CSRF
             .csrf(csrf -> csrf.disable())
-            .sessionManagement(session ->
-                    session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
+
+            // 🔥 ALLOW PREFLIGHT REQUESTS
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                        "/api/auth/**",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**"
+                        "/**"
                 ).permitAll()
-                .anyRequest().authenticated()
+            )
+
+            // 🔥 STATELESS
+            .sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             );
 
+        // 🔥 JWT FILTER (LAST)
         http.addFilterBefore(
                 jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class
