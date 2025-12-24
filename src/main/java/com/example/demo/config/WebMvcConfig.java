@@ -9,9 +9,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**") // Enable CORS for all endpoints
-                .allowedOrigins("*") // In production, replace * with your specific domain
+        registry.addMapping("/**")
+                .allowedOrigins("*") // Allows Swagger UI to connect from any origin
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*");
+                .allowedHeaders("*")
+                .allowCredentials(false);
     }
 }
