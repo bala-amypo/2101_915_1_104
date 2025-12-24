@@ -9,11 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IssuedDeviceRecordRepository extends JpaRepository<IssuedDeviceRecord, Long> {
     
-    // Required for limit enforcement [cite: 8, 196]
     @Query("SELECT COUNT(r) FROM IssuedDeviceRecord r WHERE r.employeeId = :empId AND r.returnedDate IS NULL")
     long countActiveDevicesForEmployee(@Param("empId") Long employeeId);
-
-    // Required to prevent duplicate issuances [cite: 8, 196]
-    @Query("SELECT r FROM IssuedDeviceRecord r WHERE r.employeeId = :empId AND r.deviceItemId = :devId AND r.returnedDate IS NULL")
-    IssuedDeviceRecord findActiveByEmployeeAndDevice(@Param("empId") Long employeeId, @Param("devId") Long deviceItemId);
 }
