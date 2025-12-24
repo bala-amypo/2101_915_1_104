@@ -15,14 +15,12 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
     
     private final EmployeeProfileRepository employeeRepository;
 
-    // Use Constructor Injection as required [cite: 6, 207]
     public EmployeeProfileServiceImpl(EmployeeProfileRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
     @Override
     public EmployeeProfile createEmployee(EmployeeProfile employee) {
-        // Validation check for duplicate ID [cite: 8, 208]
         if (employeeRepository.findByEmployeeId(employee.getEmployeeId()) != null) {
             throw new BadRequestException("EmployeeId already exists");
         }
@@ -42,14 +40,24 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
 
     @Override
     public void delete(Long id) {
-        EmployeeProfile employee = getEmployeeById(id);
-        employeeRepository.delete(employee);
+        EmployeeProfile emp = getEmployeeById(id);
+        employeeRepository.delete(emp);
     }
 
     @Override
     public EmployeeProfile updateEmployeeStatus(Long id, boolean active) {
-        EmployeeProfile employee = getEmployeeById(id);
-        employee.setActive(active);
-        return employeeRepository.save(employee);
+        EmployeeProfile emp = getEmployeeById(id);
+        emp.setActive(active);
+        return employeeRepository.save(emp);
+    }
+
+    @Override
+    public EmployeeProfile update(Long id, EmployeeProfile details) {
+        EmployeeProfile emp = getEmployeeById(id);
+        emp.setFullName(details.getFullName());
+        emp.setDepartment(details.getDepartment());
+        emp.setJobRole(details.getJobRole());
+        emp.setEmail(details.getEmail());
+        return employeeRepository.save(emp);
     }
 }

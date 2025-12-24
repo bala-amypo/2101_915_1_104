@@ -1,12 +1,16 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "employee_profiles")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,10 +20,7 @@ public class EmployeeProfile {
     private String employeeId;
 
     private String fullName;
-    
-    @Column(unique = true)
     private String email;
-    
     private String department;
     private String jobRole;
     private boolean active = true;
