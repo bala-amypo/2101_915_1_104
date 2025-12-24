@@ -1,9 +1,10 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-
+@Table(name = "device_catalog_items")
 public class DeviceCatalogItem {
 
     @Id
@@ -11,63 +12,81 @@ public class DeviceCatalogItem {
     private Long id;
 
     @Column(nullable = false)
-    private String deviceCode;
+    private String deviceName;
 
-    private String deviceType;
-
-    private String model;
+    @Column(nullable = false)
+    private String category;
 
     @Column(nullable = false)
     private Integer maxAllowedPerEmployee;
 
-    @Column(nullable = false)
-    private Boolean active = true;
+    private boolean active = true;
 
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    // Default Constructor
+    public DeviceCatalogItem() {
+    }
+
+    // Full Constructor
+    public DeviceCatalogItem(String deviceName, String category, Integer maxAllowedPerEmployee, boolean active) {
+        this.deviceName = deviceName;
+        this.category = category;
+        this.maxAllowedPerEmployee = maxAllowedPerEmployee;
+        this.active = active;
+    }
+
+    // Getters and Setters
     public Long getId() {
-    return id;
-}
+        return id;
+    }
 
-public void setId(Long id) {
-    this.id = id;
-}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-public String getDeviceCode() {
-    return deviceCode;
-}
+    public String getDeviceName() {
+        return deviceName;
+    }
 
-public void setDeviceCode(String deviceCode) {
-    this.deviceCode = deviceCode;
-}
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
 
-public String getDeviceType() {
-    return deviceType;
-}
+    public String getCategory() {
+        return category;
+    }
 
-public void setDeviceType(String deviceType) {
-    this.deviceType = deviceType;
-}
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-public String getModel() {
-    return model;
-}
+    public Integer getMaxAllowedPerEmployee() {
+        return maxAllowedPerEmployee;
+    }
 
-public void setModel(String model) {
-    this.model = model;
-}
+    public void setMaxAllowedPerEmployee(Integer maxAllowedPerEmployee) {
+        this.maxAllowedPerEmployee = maxAllowedPerEmployee;
+    }
 
-public Integer getMaxAllowedPerEmployee() {
-    return maxAllowedPerEmployee;
-}
+    public boolean isActive() {
+        return active;
+    }
 
-public void setMaxAllowedPerEmployee(Integer maxAllowedPerEmployee) {
-    this.maxAllowedPerEmployee = maxAllowedPerEmployee;
-}
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-public Boolean getActive() {
-    return active;
-}
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
-public void setActive(Boolean active) {
-    this.active = active;
-}
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }
