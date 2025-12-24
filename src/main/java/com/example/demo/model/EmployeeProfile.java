@@ -18,8 +18,12 @@ public class EmployeeProfile {
     private String department;
     private String jobRole;
     private boolean active = true;
+    private LocalDateTime createdAt;
 
-    // Getters and Setters (Manual to avoid Lombok issues)
+    @PrePersist
+    protected void onCreate() { this.createdAt = LocalDateTime.now(); }
+
+    // Manual Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getEmployeeId() { return employeeId; }
