@@ -1,7 +1,6 @@
-package com.example.user.model;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
-
 
 @Entity
 public class UserAccount {
@@ -10,66 +9,37 @@ public class UserAccount {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fullName;
-
-
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    private String passwordHash;
-
-    @Column(nullable = false)
+    private String username;
+    private String password;
     private String role;
 
-    @Column(nullable = false)
-    private Boolean active = true;
+    public UserAccount() {}
 
     public Long getId() {
-    return id;
-}
+        return id;
+    }
 
-public void setId(Long id) {
-    this.id = id;
-}
+    public String getUsername() {
+        return username;
+    }
 
-public String getFullName() {
-    return fullName;
-}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-public void setFullName(String fullName) {
-    this.fullName = fullName;
-}
-
-public String getEmail() {
-    return email;
-}
-
-public void setEmail(String email) {
-    this.email = email;
-}
-
-public String getPasswordHash() {
-    return passwordHash;
-}
-
-public void setPasswordHash(String passwordHash) {
-    this.passwordHash = passwordHash;
-}
-
-public String getRole() {
-    return role;
-}
-
-public void setRole(String role) {
-    this.role = role;
-}
-
-public Boolean getActive() {
-    return active;
-}
-
-public void setActive(Boolean active) {
-    this.active = active;
-}
+    public String getPassword() {
+        return password;
+    }
+ 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+ 
+    public String getRole() {
+        return role;
+    }
+ 
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
