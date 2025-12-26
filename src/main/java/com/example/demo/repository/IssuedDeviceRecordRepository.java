@@ -10,25 +10,8 @@ import java.util.Optional;
 
 public interface IssuedDeviceRecordRepository extends JpaRepository<IssuedDeviceRecord, Long> {
 
-    @Query("""
-        SELECT COUNT(i)
-        FROM IssuedDeviceRecord i
-        WHERE i.employeeId = :employeeId
-          AND i.returnedDate IS NULL
-    """)
-    long countActiveDevicesForEmployee(@Param("employeeId") Long employeeId);
-
-    @Query("""
-        SELECT i
-        FROM IssuedDeviceRecord i
-        WHERE i.employeeId = :employeeId
-          AND i.deviceItemId = :deviceItemId
-          AND i.returnedDate IS NULL
-    """)
-    Optional<IssuedDeviceRecord> findActiveByEmployeeAndDevice(
-            @Param("employeeId") Long employeeId,
-            @Param("deviceItemId") Long deviceItemId
-    );
-
     List<IssuedDeviceRecord> findByEmployeeId(Long employeeId);
+
+    List<IssuedDeviceRecord> findByEmployeeIdAndReturnedFalse(Long employeeId);
 }
+
