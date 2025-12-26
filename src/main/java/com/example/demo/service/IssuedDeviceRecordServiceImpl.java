@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.*;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.model.IssuedDeviceRecord;
 import com.example.demo.repository.*;
 import com.example.demo.service.EligibilityCheckService;
 import com.example.demo.service.IssuedDeviceRecordService;
@@ -8,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @Transactional
@@ -22,8 +25,8 @@ public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService 
             IssuedDeviceRecordRepository issuedRepo,
             EmployeeProfileRepository employeeRepo,
             DeviceCatalogItemRepository deviceRepo,
-            EligibilityCheckService eligibilityService) {
-
+            EligibilityCheckService eligibilityService
+    ) {
         this.issuedRepo = issuedRepo;
         this.employeeRepo = employeeRepo;
         this.deviceRepo = deviceRepo;
@@ -33,29 +36,23 @@ public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService 
     @Override
     public IssuedDeviceRecord issueDevice(IssuedDeviceRecord record) {
 
-        EligibilityCheckRecord check =
-                eligibilityService.validateEligibility(
-                        record.getEmployeeId(),
-                        record.getDeviceItemId()
-                );
+        employeeRepo.findById(record.getEmployeeId())
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found"));
 
-        if (!check.getIsEligible()) {
-            throw new RuntimeException(check.getReason());
+        deviceRepo.findById(record.getDeviceItemId())
+                .orElseThrow(() -> new ResourceNotFoundException("Device not found"));
+
+        if (issuedRepo.findActiveByEmployeeAndDevice(
+                record.getEmployeeId(), record.getDeviceItemId()) != null) {
+            throw new BadRequestException("Device already issued");
         }
 
-        IssuedDeviceRecord existing =
-                issuedRepo.findActiveByEmployeeAndDevice(
-                        record.getEmployeeId(),
-                        record.getDeviceItemId()
-                );
-
-        if (existing != null) {
-            throw new RuntimeException("Device already issued");
-        }
+        eligibilityService.validateEligibility(
+                record.getEmployeeId(), record.getDeviceItemId());
 
         record.setIssuedDate(LocalDate.now());
-        record.setReturnedDate(null);
         record.setStatus("ISSUED");
+        record.setReturnedDate(null);
 
         return issuedRepo.save(record);
     }
@@ -64,15 +61,20 @@ public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService 
     public IssuedDeviceRecord returnDevice(Long recordId) {
 
         IssuedDeviceRecord record = issuedRepo.findById(recordId)
-                .orElseThrow(() -> new RuntimeException("Record not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Issued record not found"));
 
         if (record.getReturnedDate() != null) {
-            throw new RuntimeException("already returned");
+            throw new BadRequestException("already returned");
         }
 
         record.setReturnedDate(LocalDate.now());
         record.setStatus("RETURNED");
-
         return issuedRepo.save(record);
+    }
+
+    // 🔴 THIS METHOD WAS MISSING – NOW FIXED
+    @Override
+    public List<IssuedDeviceRecord> getIssuedDevicesByEmployee(Long employeeId) {
+        return issuedRepo.findByEmployeeId(employeeId);
     }
 }
