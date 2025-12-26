@@ -10,25 +10,25 @@ import org.springframework.stereotype.Service;
 public class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository repository;
-    private final PasswordEncoder encoder;
+    private final PasswordEncoder passwordEncoder;
 
     public UserAccountServiceImpl(UserAccountRepository repository,
-                                  PasswordEncoder encoder) {
+                                  PasswordEncoder passwordEncoder) {
         this.repository = repository;
-        this.encoder = encoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public UserAccount register(UserAccount user) {
-        user.setPassword(encoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("USER");
         return repository.save(user);
     }
 
     @Override
-    public boolean validateLogin(String email, String rawPassword) {
-        UserAccount user = repository.findByEmail(email).orElse(null);
-        if (user == null) return false;
-
-        return encoder.matches(rawPassword, user.getPassword()); // ✔ boolean
+    public boolean validateUser(String email, String password) {
+        return repository.findByEmail(email)
+                .map(u -> passwordEncoder.matches(password, u.getPassword()))
+                .orElse(false);
     }
 }

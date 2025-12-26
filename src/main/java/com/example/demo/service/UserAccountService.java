@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.model.UserAccount;
 
 public interface UserAccountService {
-    UserAccount save(UserAccount user);
-    boolean validateUser(String username, String password);
+
+    UserAccount register(UserAccount user);
+
+    boolean validateUser(String email, String password);
 }
