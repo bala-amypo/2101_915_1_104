@@ -7,6 +7,6 @@ import com.example.demo.model.EmployeeProfile;
 
 @Repository
 public interface EmployeeProfileRepository extends JpaRepository<EmployeeProfile, Long> {
-
-    EmployeeProfile findByEmployeeId(String employeeId);
+    Optional<EmployeeProfile> findByEmployeeId(String employeeId);
 }
+

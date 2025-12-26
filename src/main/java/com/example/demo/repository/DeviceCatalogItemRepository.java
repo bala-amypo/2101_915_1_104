@@ -7,6 +7,6 @@ import com.example.demo.model.DeviceCatalogItem;
 
 @Repository
 public interface DeviceCatalogItemRepository extends JpaRepository<DeviceCatalogItem, Long> {
-
-    DeviceCatalogItem findByDeviceCode(String deviceCode);
+    Optional<DeviceCatalogItem> findByDeviceCode(String deviceCode);
 }
+
