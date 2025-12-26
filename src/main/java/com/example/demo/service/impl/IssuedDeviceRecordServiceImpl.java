@@ -1,29 +1,18 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.IssuedDeviceRecord;
-import com.example.demo.repository.DeviceCatalogItemRepository;
-import com.example.demo.repository.EmployeeProfileRepository;
 import com.example.demo.repository.IssuedDeviceRecordRepository;
 import com.example.demo.service.IssuedDeviceRecordService;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService {
 
     private final IssuedDeviceRecordRepository issuedRepo;
-    private final EmployeeProfileRepository employeeRepo;
-    private final DeviceCatalogItemRepository deviceRepo;
 
-    // ✅ EXACT constructor expected by TestNG tests
-    public IssuedDeviceRecordServiceImpl(
-            IssuedDeviceRecordRepository issuedRepo,
-            EmployeeProfileRepository employeeRepo,
-            DeviceCatalogItemRepository deviceRepo
-    ) {
+    // EXACT constructor used in tests
+    public IssuedDeviceRecordServiceImpl(IssuedDeviceRecordRepository issuedRepo) {
         this.issuedRepo = issuedRepo;
-        this.employeeRepo = employeeRepo;
-        this.deviceRepo = deviceRepo;
     }
 
     @Override
@@ -34,6 +23,7 @@ public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService 
         record.setDeviceItemId(deviceItemId);
         record.setIssuedAt(LocalDateTime.now());
         record.setReturned(Boolean.FALSE);
+        record.setStatus("ISSUED");
 
         return issuedRepo.save(record);
     }
@@ -44,14 +34,10 @@ public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService 
         IssuedDeviceRecord record = issuedRepo.findById(recordId).orElse(null);
         if (record != null) {
             record.setReturned(Boolean.TRUE);
-            record.setReturnedAt(LocalDateTime.now());
+            record.setReturnedDate(LocalDateTime.now());
+            record.setStatus("RETURNED");
             issuedRepo.save(record);
         }
         return record;
-    }
-
-    @Override
-    public List<IssuedDeviceRecord> getIssuedDevicesByEmployee(Long employeeId) {
-        return issuedRepo.findByEmployeeId(employeeId);
     }
 }

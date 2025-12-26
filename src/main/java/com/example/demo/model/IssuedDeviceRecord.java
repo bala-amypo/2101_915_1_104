@@ -15,11 +15,15 @@ public class IssuedDeviceRecord {
 
     private Long deviceItemId;
 
+    // ✅ REQUIRED BY TESTS
+    private String status;
+
     private LocalDateTime issuedAt;
 
     private Boolean returned;
 
-    private LocalDateTime returnedAt;
+    // ✅ Tests use returnedDate (NOT returnedAt)
+    private LocalDateTime returnedDate;
 
     // ===== GETTERS =====
 
@@ -35,6 +39,10 @@ public class IssuedDeviceRecord {
         return deviceItemId;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
     public LocalDateTime getIssuedAt() {
         return issuedAt;
     }
@@ -43,11 +51,11 @@ public class IssuedDeviceRecord {
         return returned;
     }
 
-    public LocalDateTime getReturnedAt() {
-        return returnedAt;
+    public LocalDateTime getReturnedDate() {
+        return returnedDate;
     }
 
-    // ===== SETTERS (REQUIRED BY TESTS & SERVICES) =====
+    // ===== SETTERS (ALL REQUIRED BY TESTS) =====
 
     public void setId(Long id) {
         this.id = id;
@@ -61,6 +69,10 @@ public class IssuedDeviceRecord {
         this.deviceItemId = deviceItemId;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public void setIssuedAt(LocalDateTime issuedAt) {
         this.issuedAt = issuedAt;
     }
@@ -69,7 +81,7 @@ public class IssuedDeviceRecord {
         this.returned = returned;
     }
 
-    public void setReturnedAt(LocalDateTime returnedAt) {
-        this.returnedAt = returnedAt;
+    public void setReturnedDate(LocalDateTime returnedDate) {
+        this.returnedDate = returnedDate;
     }
 }
