@@ -2,6 +2,7 @@ package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,18 +22,20 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // Swagger & auth must be open
+                // Swagger URLs
                 .requestMatchers(
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
-                        "/swagger-ui.html",
-                        "/api/auth/**",
-                        "/hello-servlet"
+                        "/swagger-ui.html"
                 ).permitAll()
-                // everything else secured
+
+                // Auth endpoints
+                .requestMatchers("/api/auth/**").permitAll()
+
+                // Everything else secured
                 .anyRequest().authenticated()
             )
-            .httpBasic(httpBasic -> {}); // simple basic auth (tests expect minimal security)
+            .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
