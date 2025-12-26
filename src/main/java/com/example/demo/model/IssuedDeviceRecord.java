@@ -1,7 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "issued_device_records")
@@ -15,13 +15,13 @@ public class IssuedDeviceRecord {
 
     private Long deviceItemId;
 
-    private LocalDate issuedDate;
+    private LocalDateTime issuedAt;
 
-    private LocalDate returnedDate;
+    private Boolean returned;
 
-    private String status; // ISSUED or RETURNED
+    private LocalDateTime returnedAt;
 
-    /* ===== GETTERS & SETTERS ===== */
+    // ===== GETTERS =====
 
     public Long getId() {
         return id;
@@ -31,39 +31,45 @@ public class IssuedDeviceRecord {
         return employeeId;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
-    }
-
     public Long getDeviceItemId() {
         return deviceItemId;
+    }
+
+    public LocalDateTime getIssuedAt() {
+        return issuedAt;
+    }
+
+    public Boolean getReturned() {
+        return returned;
+    }
+
+    public LocalDateTime getReturnedAt() {
+        return returnedAt;
+    }
+
+    // ===== SETTERS (REQUIRED BY TESTS & SERVICES) =====
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public void setDeviceItemId(Long deviceItemId) {
         this.deviceItemId = deviceItemId;
     }
 
-    public LocalDate getIssuedDate() {
-        return issuedDate;
+    public void setIssuedAt(LocalDateTime issuedAt) {
+        this.issuedAt = issuedAt;
     }
 
-    public void setIssuedDate(LocalDate issuedDate) {
-        this.issuedDate = issuedDate;
+    public void setReturned(Boolean returned) {
+        this.returned = returned;
     }
 
-    public LocalDate getReturnedDate() {
-        return returnedDate;
-    }
-
-    public void setReturnedDate(LocalDate returnedDate) {
-        this.returnedDate = returnedDate;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    public void setReturnedAt(LocalDateTime returnedAt) {
+        this.returnedAt = returnedAt;
     }
 }

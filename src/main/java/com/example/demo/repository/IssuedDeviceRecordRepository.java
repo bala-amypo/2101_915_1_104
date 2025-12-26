@@ -6,12 +6,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IssuedDeviceRecordRepository extends JpaRepository<IssuedDeviceRecord, Long> {
 
     List<IssuedDeviceRecord> findByEmployeeId(Long employeeId);
 
     List<IssuedDeviceRecord> findByEmployeeIdAndReturnedFalse(Long employeeId);
-}
 
+    @Query("""
+           SELECT COUNT(r)
+           FROM IssuedDeviceRecord r
+           WHERE r.employeeId = :employeeId
+             AND r.returned = false
+           """)
+    long countActiveDevicesForEmployee(@Param("employeeId") Long employeeId);
+}
