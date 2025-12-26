@@ -6,11 +6,15 @@ import com.example.demo.model.EmployeeProfile;
 import com.example.demo.repository.EmployeeProfileRepository;
 import com.example.demo.service.EmployeeProfileService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Transactional
 public class EmployeeProfileServiceImpl implements EmployeeProfileService {
-    
+
     private final EmployeeProfileRepository repository;
 
     public EmployeeProfileServiceImpl(EmployeeProfileRepository repository) {
@@ -22,6 +26,8 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
         if (repository.findByEmployeeId(employee.getEmployeeId()) != null) {
             throw new BadRequestException("EmployeeId already exists");
         }
+        employee.setCreatedAt(LocalDateTime.now());
+        employee.setActive(true);
         return repository.save(employee);
     }
 
@@ -34,21 +40,6 @@ public class EmployeeProfileServiceImpl implements EmployeeProfileService {
     @Override
     public List<EmployeeProfile> getAllEmployees() {
         return repository.findAll();
-    }
-
-    @Override
-    public EmployeeProfile update(Long id, EmployeeProfile details) {
-        EmployeeProfile emp = getEmployeeById(id);
-        emp.setFullName(details.getFullName());
-        emp.setDepartment(details.getDepartment());
-        emp.setJobRole(details.getJobRole());
-        emp.setEmail(details.getEmail());
-        return repository.save(emp);
-    }
-
-    @Override
-    public void delete(Long id) {
-        repository.delete(getEmployeeById(id));
     }
 
     @Override

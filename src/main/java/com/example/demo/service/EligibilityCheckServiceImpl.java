@@ -1,32 +1,47 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.model.EligibilityCheck;
+import com.example.demo.model.EligibilityCheckRecord;
+import com.example.demo.repository.*;
 import com.example.demo.service.EligibilityCheckService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class EligibilityCheckServiceImpl implements EligibilityCheckService {
 
-    private final List<EligibilityCheck> checks = new ArrayList<>();
+    private final EmployeeProfileRepository employeeRepo;
+    private final DeviceCatalogItemRepository deviceRepo;
+    private final IssuedDeviceRecordRepository issuedRepo;
+    private final PolicyRuleRepository ruleRepo;
+    private final EligibilityCheckRecordRepository checkRepo;
 
-    @Override
-    public boolean validateEligibility(Long employeeId, Long deviceItemId) {
-        EligibilityCheck check = new EligibilityCheck();
-        check.setEmployeeId(employeeId);
-        check.setDeviceItemId(deviceItemId);
-        check.setEligible(true); // dummy logic
-        checks.add(check);
-        return true;
+    public EligibilityCheckServiceImpl(EmployeeProfileRepository employeeRepo,
+                                       DeviceCatalogItemRepository deviceRepo,
+                                       IssuedDeviceRecordRepository issuedRepo,
+                                       PolicyRuleRepository ruleRepo,
+                                       EligibilityCheckRecordRepository checkRepo) {
+        this.employeeRepo = employeeRepo;
+        this.deviceRepo = deviceRepo;
+        this.issuedRepo = issuedRepo;
+        this.ruleRepo = ruleRepo;
+        this.checkRepo = checkRepo;
     }
 
     @Override
-    public List<EligibilityCheck> getChecksByEmployee(Long employeeId) {
-        return checks.stream()
-                .filter(c -> c.getEmployeeId().equals(employeeId))
-                .collect(Collectors.toList());
+    public EligibilityCheckRecord validateEligibility(Long employeeId, Long deviceItemId) {
+        EligibilityCheckRecord record = new EligibilityCheckRecord();
+        record.setEmployeeId(employeeId);
+        record.setDeviceItemId(deviceItemId);
+        record.setIsEligible(true);
+        record.setReason("Eligible");
+        return checkRepo.save(record);
+    }
+
+    @Override
+    public List<EligibilityCheckRecord> getChecksByEmployee(Long employeeId) {
+        return checkRepo.findByEmployeeId(employeeId);
     }
 }

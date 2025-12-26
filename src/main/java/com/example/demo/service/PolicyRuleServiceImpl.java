@@ -1,26 +1,39 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.PolicyRule;
+import com.example.demo.repository.PolicyRuleRepository;
 import com.example.demo.service.PolicyRuleService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class PolicyRuleServiceImpl implements PolicyRuleService {
 
-    // For simplicity, using in-memory list; replace with repository in real project
-    private final List<PolicyRule> rules = new ArrayList<>();
+    private final PolicyRuleRepository repository;
 
-    @Override
-    public PolicyRule create(PolicyRule policyRule) {
-        rules.add(policyRule);
-        return policyRule;
+    public PolicyRuleServiceImpl(PolicyRuleRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public List<PolicyRule> getAll() {
-        return new ArrayList<>(rules);
+    public PolicyRule createRule(PolicyRule rule) {
+        if (repository.findByRuleCode(rule.getRuleCode()) != null) {
+            throw new BadRequestException("Rule code");
+        }
+        return repository.save(rule);
+    }
+
+    @Override
+    public List<PolicyRule> getAllRules() {
+        return repository.findAll();
+    }
+
+    @Override
+    public List<PolicyRule> getActiveRules() {
+        return repository.findByActiveTrue();
     }
 }
