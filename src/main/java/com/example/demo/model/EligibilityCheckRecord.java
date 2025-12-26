@@ -15,7 +15,6 @@ public class EligibilityCheckRecord {
     private Long deviceItemId;
     private Boolean isEligible;
     private String reason;
-
     private LocalDateTime checkedAt;
 
     @PrePersist
@@ -50,7 +49,7 @@ public class EligibilityCheckRecord {
     }
 
     public void setIsEligible(Boolean eligible) {
-        isEligible = eligible;
+        this.isEligible = eligible;
     }
 
     public String getReason() {
