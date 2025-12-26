@@ -26,6 +26,7 @@ public class JwtUtil {
     }
 
     public String generateToken(UserAccount user) {
+
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", user.getId());
         claims.put("email", user.getEmail());
@@ -44,7 +45,7 @@ public class JwtUtil {
         try {
             parseClaims(token);
             return true;
-        } catch (JwtException | IllegalArgumentException ex) {
+        } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
     }
