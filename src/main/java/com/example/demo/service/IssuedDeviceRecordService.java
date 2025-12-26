@@ -1,32 +1,13 @@
-package com.example.demo.repository;
+package com.example.demo.service;
 
 import com.example.demo.model.IssuedDeviceRecord;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
 import java.util.List;
-import java.util.Optional;
 
-public interface IssuedDeviceRecordRepository
-        extends JpaRepository<IssuedDeviceRecord, Long> {
+public interface IssuedDeviceRecordService {
 
-    @Query("""
-       SELECT r FROM IssuedDeviceRecord r
-       WHERE r.employeeId = :employeeId
-         AND r.deviceItemId = :deviceItemId
-         AND r.returnedDate IS NULL
-    """)
-    Optional<IssuedDeviceRecord> findActiveByEmployeeAndDevice(
-            Long employeeId,
-            Long deviceItemId
-    );
+    IssuedDeviceRecord issueDevice(IssuedDeviceRecord record);
 
-    @Query("""
-       SELECT COUNT(r) FROM IssuedDeviceRecord r
-       WHERE r.employeeId = :employeeId
-         AND r.returnedDate IS NULL
-    """)
-    long countActiveDevicesForEmployee(Long employeeId);
+    IssuedDeviceRecord returnDevice(Long recordId);
 
-    List<IssuedDeviceRecord> findByEmployeeId(Long employeeId);
+    List<IssuedDeviceRecord> getIssuedDevicesByEmployee(Long employeeId);
 }
