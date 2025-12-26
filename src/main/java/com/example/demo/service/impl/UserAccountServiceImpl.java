@@ -4,31 +4,26 @@ import com.example.demo.model.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.UserAccountService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
-@Service
 public class UserAccountServiceImpl implements UserAccountService {
 
-    private final UserAccountRepository repository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserAccountRepository repo;
+    private final PasswordEncoder encoder;
 
-    public UserAccountServiceImpl(UserAccountRepository repository,
-                                  PasswordEncoder passwordEncoder) {
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
+    public UserAccountServiceImpl(UserAccountRepository repo, PasswordEncoder encoder) {
+        this.repo = repo;
+        this.encoder = encoder;
     }
 
     @Override
     public UserAccount register(UserAccount user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(encoder.encode(user.getPassword()));
         user.setRole("USER");
-        return repository.save(user);
+        return repo.save(user);
     }
 
     @Override
-    public boolean validateUser(String email, String password) {
-        return repository.findByEmail(email)
-                .map(u -> passwordEncoder.matches(password, u.getPassword()))
-                .orElse(false);
+    public boolean validatePassword(UserAccount u, String raw) {
+        return encoder.matches(raw, u.getPassword());
     }
 }
