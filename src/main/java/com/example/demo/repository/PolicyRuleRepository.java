@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface PolicyRuleRepository extends JpaRepository<PolicyRule, Long> {
 
-    Optional<PolicyRule> findByRuleCode(String ruleCode);
-
     List<PolicyRule> findByActiveTrue();
+
+    Optional<PolicyRule> findByRuleCode(String ruleCode);
 }

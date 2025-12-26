@@ -18,53 +18,28 @@ public class EligibilityCheckRecord {
     private LocalDateTime checkedAt;
 
     @PrePersist
-    public void onCheck() {
+    public void prePersist() {
         this.checkedAt = LocalDateTime.now();
     }
 
-    // ===== Getters & Setters =====
-
-    public Long getId() {
-        return id;
+    // ✅ REQUIRED BY TESTS
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
-    }
+    public Long getId() { return id; }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
-    }
+    public Long getEmployeeId() { return employeeId; }
+    public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }
 
-    public Long getDeviceItemId() {
-        return deviceItemId;
-    }
+    public Long getDeviceItemId() { return deviceItemId; }
+    public void setDeviceItemId(Long deviceItemId) { this.deviceItemId = deviceItemId; }
 
-    public void setDeviceItemId(Long deviceItemId) {
-        this.deviceItemId = deviceItemId;
-    }
+    public Boolean getIsEligible() { return isEligible; }
+    public void setIsEligible(Boolean eligible) { isEligible = eligible; }
 
-    public Boolean getIsEligible() {
-        return isEligible;
-    }
+    public String getReason() { return reason; }
+    public void setReason(String reason) { this.reason = reason; }
 
-    public void setIsEligible(Boolean eligible) {
-        this.isEligible = eligible;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
-
-    public LocalDateTime getCheckedAt() {
-        return checkedAt;
-    }
-
-    public void setCheckedAt(LocalDateTime checkedAt) {
-        this.checkedAt = checkedAt;
-    }
+    public LocalDateTime getCheckedAt() { return checkedAt; }
 }
