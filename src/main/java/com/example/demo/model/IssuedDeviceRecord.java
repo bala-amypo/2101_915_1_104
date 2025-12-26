@@ -14,12 +14,12 @@ public class IssuedDeviceRecord {
     private Long employeeId;
     private Long deviceItemId;
 
-    private LocalDate issueDate;
+    private LocalDate issuedDate;
     private LocalDate returnDate;
 
     private boolean returned;
 
-    // -------------------- getters & setters --------------------
+    // ---------- getters & setters ----------
 
     public Long getId() {
         return id;
@@ -41,12 +41,12 @@ public class IssuedDeviceRecord {
         this.deviceItemId = deviceItemId;
     }
 
-    public LocalDate getIssueDate() {
-        return issueDate;
+    public LocalDate getIssuedDate() {
+        return issuedDate;
     }
 
-    public void setIssueDate(LocalDate issueDate) {
-        this.issueDate = issueDate;
+    public void setIssuedDate(LocalDate issuedDate) {
+        this.issuedDate = issuedDate;
     }
 
     public LocalDate getReturnDate() {
