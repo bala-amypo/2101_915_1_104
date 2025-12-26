@@ -2,13 +2,11 @@ package com.example.demo.security;
 
 import com.example.demo.model.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.List;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -25,19 +23,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         UserAccount user = userAccountRepository.findByEmail(email)
                 .orElseThrow(() ->
-                        new UsernameNotFoundException("User not found with email: " + email)
-                );
+                        new UsernameNotFoundException("User not found: " + email));
 
-        return new org.springframework.security.core.userdetails.User(
+        return new User(
                 user.getEmail(),
-                user.getPasswordHash(),
-                user.getActive(),
-                true,
-                true,
-                true,
-                Collections.singletonList(
-                        new SimpleGrantedAuthority("ROLE_" + user.getRole())
-                )
+                user.getPassword(),   // now works
+                List.of(new SimpleGrantedAuthority(user.getRole()))
         );
     }
 }
