@@ -19,9 +19,9 @@ public class IssuedDeviceRecord {
 
     private LocalDate returnedDate;
 
-    private String status; // ISSUED / RETURNED
+    private String status; // ISSUED or RETURNED
 
-    // ===== GETTERS & SETTERS =====
+    /* ===== GETTERS & SETTERS ===== */
 
     public Long getId() {
         return id;
