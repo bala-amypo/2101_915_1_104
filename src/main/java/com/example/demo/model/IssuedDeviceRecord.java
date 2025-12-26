@@ -15,11 +15,11 @@ public class IssuedDeviceRecord {
     private Long deviceItemId;
 
     private LocalDate issuedDate;
-    private LocalDate returnDate;
+    private LocalDate returnDate;   // ✅ THIS FIELD EXISTS
 
     private boolean returned;
 
-    // ---------- getters & setters ----------
+    // -------- getters & setters --------
 
     public Long getId() {
         return id;

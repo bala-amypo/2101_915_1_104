@@ -13,10 +13,10 @@ import java.util.List;
 @Transactional
 public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService {
 
-    private final IssuedDeviceRecordRepository repository;
+    private final IssuedDeviceRecordRepository repo;
 
-    public IssuedDeviceRecordServiceImpl(IssuedDeviceRecordRepository repository) {
-        this.repository = repository;
+    public IssuedDeviceRecordServiceImpl(IssuedDeviceRecordRepository repo) {
+        this.repo = repo;
     }
 
     @Override
@@ -26,26 +26,26 @@ public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService 
         record.setDeviceItemId(deviceItemId);
         record.setIssuedDate(LocalDate.now());
         record.setReturned(false);
-        return repository.save(record);
+        return repo.save(record);
     }
 
     @Override
     public IssuedDeviceRecord returnDevice(Long issuedRecordId) {
-        IssuedDeviceRecord record = repository.findById(issuedRecordId)
-                .orElseThrow(() -> new RuntimeException("Issued record not found"));
+        IssuedDeviceRecord record = repo.findById(issuedRecordId)
+                .orElseThrow(() -> new RuntimeException("Record not found"));
 
         record.setReturned(true);
         record.setReturnDate(LocalDate.now());
-        return repository.save(record);
+        return repo.save(record);
     }
 
     @Override
     public List<IssuedDeviceRecord> getIssuedDevicesByEmployee(Long employeeId) {
-        return repository.findByEmployeeId(employeeId);
+        return repo.findByEmployeeId(employeeId);
     }
 
     @Override
     public List<IssuedDeviceRecord> getAll() {
-        return repository.findAll();
+        return repo.findAll();
     }
 }
