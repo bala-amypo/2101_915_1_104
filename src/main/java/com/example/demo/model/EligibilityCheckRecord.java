@@ -71,4 +71,7 @@ public class EligibilityCheckRecord {
     public void setCheckedAt(LocalDateTime checkedAt) {
         this.checkedAt = checkedAt;
     }
+    public void prePersist() {
+    onCreate();
+    }
 }
