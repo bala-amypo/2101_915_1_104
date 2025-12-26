@@ -31,6 +31,8 @@
 
     <dependencies>
 
+        <!-- ===================== CORE ===================== -->
+
         <!-- WEB -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -88,6 +90,26 @@
             <version>${springdoc.version}</version>
         </dependency>
 
+        <!-- ===================== TESTING ===================== -->
+
+        <!-- SPRING BOOT TEST (REQUIRED for @SpringBootTest) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <!-- Remove JUnit -->
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.jupiter</groupId>
+                    <artifactId>junit-jupiter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
         <!-- TESTNG -->
         <dependency>
             <groupId>org.testng</groupId>
@@ -102,43 +124,25 @@
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
-    
-        <!-- SPRING BOOT TEST (REQUIRED FOR HIDDEN TESTS) -->
-        <!-- SPRING BOOT TEST (REQUIRED FOR HIDDEN TESTS) -->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-test</artifactId>
-    <scope>test</scope>
-    <exclusions>
-        <exclusion>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-        </exclusion>
-    </exclusions>
-    
-</dependency>
-         <dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-test</artifactId>
-    <scope>test</scope>
-</dependency>
-
 
     </dependencies>
 
     <build>
         <plugins>
 
+            <!-- SPRING BOOT -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
+            <!-- TESTNG RUNNER -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.2.5</version>
                 <configuration>
+                    <useModulePath>false</useModulePath>
                     <suiteXmlFiles>
                         <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
