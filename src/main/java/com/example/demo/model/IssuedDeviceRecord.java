@@ -13,27 +13,55 @@ public class IssuedDeviceRecord {
 
     private Long employeeId;
     private Long deviceItemId;
-    private LocalDate issuedDate;
-    private LocalDate returnedDate;
-    private String status;
 
-    public IssuedDeviceRecord() {}
+    private LocalDate issueDate;
+    private LocalDate returnDate;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    private boolean returned;
 
-    public Long getEmployeeId() { return employeeId; }
-    public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }
+    // -------------------- getters & setters --------------------
 
-    public Long getDeviceItemId() { return deviceItemId; }
-    public void setDeviceItemId(Long deviceItemId) { this.deviceItemId = deviceItemId; }
+    public Long getId() {
+        return id;
+    }
 
-    public LocalDate getIssuedDate() { return issuedDate; }
-    public void setIssuedDate(LocalDate issuedDate) { this.issuedDate = issuedDate; }
+    public Long getEmployeeId() {
+        return employeeId;
+    }
 
-    public LocalDate getReturnedDate() { return returnedDate; }
-    public void setReturnedDate(LocalDate returnedDate) { this.returnedDate = returnedDate; }
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
 
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public Long getDeviceItemId() {
+        return deviceItemId;
+    }
+
+    public void setDeviceItemId(Long deviceItemId) {
+        this.deviceItemId = deviceItemId;
+    }
+
+    public LocalDate getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(LocalDate issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
+    }
+
+    public boolean isReturned() {
+        return returned;
+    }
+
+    public void setReturned(boolean returned) {
+        this.returned = returned;
+    }
 }
