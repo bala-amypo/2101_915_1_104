@@ -6,13 +6,31 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenProvider {
 
-    private final JwtUtil jwtUtil;
+    private final Key key;
+    private final long validityMs;
 
-    public JwtTokenProvider(JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
+    public JwtTokenProvider(String secret, int validityMs) {
+        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+        this.validityMs = validityMs;
     }
 
-    public String getUsername(String token) {
-        return jwtUtil.getEmailFromToken(token);
+    public String generateToken(UserAccount user) {
+        return Jwts.builder()
+                .claim("userId", user.getId())
+                .claim("email", user.getEmail())
+                .claim("role", user.getRole())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + validityMs))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
