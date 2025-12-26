@@ -12,14 +12,16 @@ public class IssuedDeviceRecord {
     private Long id;
 
     private Long employeeId;
+
     private Long deviceItemId;
 
     private LocalDate issuedDate;
-    private LocalDate returnDate;   // ✅ THIS FIELD EXISTS
 
-    private boolean returned;
+    private LocalDate returnedDate;
 
-    // -------- getters & setters --------
+    private String status; // ISSUED or RETURNED
+
+    // ===== GETTERS & SETTERS =====
 
     public Long getId() {
         return id;
@@ -49,19 +51,19 @@ public class IssuedDeviceRecord {
         this.issuedDate = issuedDate;
     }
 
-    public LocalDate getReturnDate() {
-        return returnDate;
+    public LocalDate getReturnedDate() {
+        return returnedDate;
     }
 
-    public void setReturnDate(LocalDate returnDate) {
-        this.returnDate = returnDate;
+    public void setReturnedDate(LocalDate returnedDate) {
+        this.returnedDate = returnedDate;
     }
 
-    public boolean isReturned() {
-        return returned;
+    public String getStatus() {
+        return status;
     }
 
-    public void setReturned(boolean returned) {
-        this.returned = returned;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
