@@ -4,23 +4,29 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "employee_profiles")
+@Table(
+    name = "employee_profiles",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = "employeeId"),
+        @UniqueConstraint(columnNames = "email")
+    }
+)
 public class EmployeeProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String employeeId;
 
+    @Column(nullable = false)
     private String fullName;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String email;
 
     private String department;
-
     private String jobRole;
 
     private Boolean active = true;
@@ -56,7 +62,6 @@ public class EmployeeProfile {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -64,7 +69,6 @@ public class EmployeeProfile {
     public String getDepartment() {
         return department;
     }
-
     public void setDepartment(String department) {
         this.department = department;
     }
@@ -72,7 +76,6 @@ public class EmployeeProfile {
     public String getJobRole() {
         return jobRole;
     }
-
     public void setJobRole(String jobRole) {
         this.jobRole = jobRole;
     }
@@ -80,7 +83,6 @@ public class EmployeeProfile {
     public Boolean getActive() {
         return active;
     }
-
     public void setActive(Boolean active) {
         this.active = active;
     }
@@ -88,7 +90,6 @@ public class EmployeeProfile {
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
-
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }

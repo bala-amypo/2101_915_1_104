@@ -12,11 +12,9 @@ public class IssuedDeviceRecord {
     private Long id;
 
     private Long employeeId;
-
     private Long deviceItemId;
 
     private LocalDate issuedDate;
-
     private LocalDate returnedDate;
 
     private String status;
@@ -34,7 +32,6 @@ public class IssuedDeviceRecord {
     public Long getEmployeeId() {
         return employeeId;
     }
-
     public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
@@ -42,7 +39,6 @@ public class IssuedDeviceRecord {
     public Long getDeviceItemId() {
         return deviceItemId;
     }
-
     public void setDeviceItemId(Long deviceItemId) {
         this.deviceItemId = deviceItemId;
     }
@@ -50,7 +46,6 @@ public class IssuedDeviceRecord {
     public LocalDate getIssuedDate() {
         return issuedDate;
     }
-
     public void setIssuedDate(LocalDate issuedDate) {
         this.issuedDate = issuedDate;
     }
@@ -58,7 +53,6 @@ public class IssuedDeviceRecord {
     public LocalDate getReturnedDate() {
         return returnedDate;
     }
-
     public void setReturnedDate(LocalDate returnedDate) {
         this.returnedDate = returnedDate;
     }
@@ -66,7 +60,6 @@ public class IssuedDeviceRecord {
     public String getStatus() {
         return status;
     }
-
     public void setStatus(String status) {
         this.status = status;
     }
