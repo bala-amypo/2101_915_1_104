@@ -22,8 +22,13 @@ public class UserAccountServiceImpl implements UserAccountService {
         return repo.save(user);
     }
 
+    // ✅ REQUIRED BY INTERFACE
     @Override
-    public boolean validatePassword(UserAccount u, String raw) {
-        return encoder.matches(raw, u.getPassword());
+    public boolean validateUser(String email, String rawPassword) {
+        UserAccount user = repo.findByEmail(email).orElse(null);
+        if (user == null) {
+            return false;
+        }
+        return encoder.matches(rawPassword, user.getPassword());
     }
 }
