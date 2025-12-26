@@ -7,8 +7,5 @@ public interface EmployeeProfileService {
     EmployeeProfile createEmployee(EmployeeProfile employee);
     EmployeeProfile getEmployeeById(Long id);
     List<EmployeeProfile> getAllEmployees();
-    void delete(Long id);
     EmployeeProfile updateEmployeeStatus(Long id, boolean active);
-    // This MUST exist to satisfy the compiler
-    EmployeeProfile update(Long id, EmployeeProfile employee);
 }

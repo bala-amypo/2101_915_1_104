@@ -4,6 +4,7 @@ import com.example.demo.model.PolicyRule;
 import java.util.List;
 
 public interface PolicyRuleService {
-    PolicyRule create(PolicyRule policyRule);
-    List<PolicyRule> getAll();
+    PolicyRule createRule(PolicyRule rule);
+    List<PolicyRule> getAllRules();
+    List<PolicyRule> getActiveRules();
 }
