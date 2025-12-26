@@ -4,7 +4,9 @@ import com.example.demo.model.UserAccount;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.UserAccountService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service  // 🔴 THIS WAS MISSING
 public class UserAccountServiceImpl implements UserAccountService {
 
     private final UserAccountRepository repo;
@@ -22,7 +24,6 @@ public class UserAccountServiceImpl implements UserAccountService {
         return repo.save(user);
     }
 
-    // ✅ REQUIRED BY INTERFACE
     @Override
     public boolean validateUser(String email, String rawPassword) {
         UserAccount user = repo.findByEmail(email).orElse(null);
