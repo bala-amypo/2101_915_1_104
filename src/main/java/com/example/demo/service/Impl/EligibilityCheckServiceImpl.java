@@ -3,13 +3,11 @@ package com.example.demo.service.impl;
 import com.example.demo.model.EligibilityCheckRecord;
 import com.example.demo.repository.EligibilityCheckRecordRepository;
 import com.example.demo.service.EligibilityCheckService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@Transactional
 public class EligibilityCheckServiceImpl implements EligibilityCheckService {
 
     private final EligibilityCheckRecordRepository repo;

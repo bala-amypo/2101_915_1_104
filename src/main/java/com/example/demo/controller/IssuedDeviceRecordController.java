@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/issued-devices")
+@RequestMapping("/issued-devices")
 public class IssuedDeviceRecordController {
 
     private final IssuedDeviceRecordService service;
@@ -16,15 +16,13 @@ public class IssuedDeviceRecordController {
         this.service = service;
     }
 
-    @PostMapping("/issue")
-    public IssuedDeviceRecord issue(
-            @RequestParam Long employeeId,
-            @RequestParam Long deviceItemId
-    ) {
+    @PostMapping
+    public IssuedDeviceRecord issue(@RequestParam Long employeeId,
+                                    @RequestParam Long deviceItemId) {
         return service.issueDevice(employeeId, deviceItemId);
     }
 
-    @PutMapping("/return/{id}")
+    @PostMapping("/return/{id}")
     public IssuedDeviceRecord returnDevice(@PathVariable Long id) {
         return service.returnDevice(id);
     }
@@ -32,10 +30,5 @@ public class IssuedDeviceRecordController {
     @GetMapping("/employee/{employeeId}")
     public List<IssuedDeviceRecord> byEmployee(@PathVariable Long employeeId) {
         return service.getIssuedDevicesByEmployee(employeeId);
-    }
-
-    @GetMapping
-    public List<IssuedDeviceRecord> all() {
-        return service.getAll();
     }
 }

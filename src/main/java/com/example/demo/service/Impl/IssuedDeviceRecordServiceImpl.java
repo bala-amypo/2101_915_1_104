@@ -1,30 +1,20 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.IssuedDeviceRecord;
-import com.example.demo.repository.*;
+import com.example.demo.repository.IssuedDeviceRecordRepository;
 import com.example.demo.service.IssuedDeviceRecordService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
-@Transactional
 public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService {
 
-    private final IssuedDeviceRecordRepository issuedRepo;
-    private final EmployeeProfileRepository employeeRepo;
-    private final DeviceCatalogItemRepository deviceRepo;
+    private final IssuedDeviceRecordRepository repo;
 
-    public IssuedDeviceRecordServiceImpl(
-            IssuedDeviceRecordRepository issuedRepo,
-            EmployeeProfileRepository employeeRepo,
-            DeviceCatalogItemRepository deviceRepo
-    ) {
-        this.issuedRepo = issuedRepo;
-        this.employeeRepo = employeeRepo;
-        this.deviceRepo = deviceRepo;
+    public IssuedDeviceRecordServiceImpl(IssuedDeviceRecordRepository repo) {
+        this.repo = repo;
     }
 
     @Override
@@ -33,26 +23,26 @@ public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService 
         record.setEmployeeId(employeeId);
         record.setDeviceItemId(deviceItemId);
         record.setIssuedDate(LocalDate.now());
-        record.setStatus("ISSUED");
-        return issuedRepo.save(record);
+        record.setReturned(false);
+        return repo.save(record);
     }
 
     @Override
     public IssuedDeviceRecord returnDevice(Long issuedRecordId) {
-        IssuedDeviceRecord record = issuedRepo.findById(issuedRecordId)
-                .orElseThrow(() -> new RuntimeException("Record not found"));
-        record.setReturnedDate(LocalDate.now());
-        record.setStatus("RETURNED");
-        return issuedRepo.save(record);
+        IssuedDeviceRecord record =
+                repo.findById(issuedRecordId).orElseThrow();
+        record.setReturned(true);
+        record.setReturnDate(LocalDate.now());
+        return repo.save(record);
     }
 
     @Override
     public List<IssuedDeviceRecord> getIssuedDevicesByEmployee(Long employeeId) {
-        return issuedRepo.findByEmployeeId(employeeId);
+        return repo.findByEmployeeId(employeeId);
     }
 
     @Override
     public List<IssuedDeviceRecord> getAll() {
-        return issuedRepo.findAll();
+        return repo.findAll();
     }
 }
