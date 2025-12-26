@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.IssuedDeviceRecord;
 import com.example.demo.service.IssuedDeviceRecordService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,26 +10,32 @@ import java.util.List;
 @RequestMapping("/api/issued-devices")
 public class IssuedDeviceRecordController {
 
-    private final IssuedDeviceRecordService issuedDeviceRecordService;
+    private final IssuedDeviceRecordService service;
 
-    public IssuedDeviceRecordController(IssuedDeviceRecordService issuedDeviceRecordService) {
-        this.issuedDeviceRecordService = issuedDeviceRecordService;
+    public IssuedDeviceRecordController(IssuedDeviceRecordService service) {
+        this.service = service;
     }
 
-    @PostMapping
-    public ResponseEntity<IssuedDeviceRecord> issue(@RequestBody IssuedDeviceRecord record) {
-        return ResponseEntity.ok(issuedDeviceRecordService.issueDevice(record));
+    @PostMapping("/issue")
+    public IssuedDeviceRecord issue(
+            @RequestParam Long employeeId,
+            @RequestParam Long deviceItemId
+    ) {
+        return service.issueDevice(employeeId, deviceItemId);
     }
 
-    @PutMapping("/{id}/return")
-    public ResponseEntity<IssuedDeviceRecord> returnDevice(@PathVariable Long id) {
-        return ResponseEntity.ok(issuedDeviceRecordService.returnDevice(id));
+    @PutMapping("/return/{id}")
+    public IssuedDeviceRecord returnDevice(@PathVariable Long id) {
+        return service.returnDevice(id);
     }
 
     @GetMapping("/employee/{employeeId}")
-    public ResponseEntity<List<IssuedDeviceRecord>> getByEmployee(@PathVariable Long employeeId) {
-        return ResponseEntity.ok(
-                issuedDeviceRecordService.getIssuedDevicesByEmployee(employeeId)
-        );
+    public List<IssuedDeviceRecord> byEmployee(@PathVariable Long employeeId) {
+        return service.getIssuedDevicesByEmployee(employeeId);
+    }
+
+    @GetMapping
+    public List<IssuedDeviceRecord> all() {
+        return service.getAll();
     }
 }
