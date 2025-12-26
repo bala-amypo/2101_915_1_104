@@ -15,38 +15,43 @@ import java.util.List;
 @Transactional
 public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService {
 
-    private final IssuedDeviceRecordRepository repository;
+    private final IssuedDeviceRecordRepository issuedRepo;
+    private final EmployeeProfileRepository employeeRepo;
+    private final DeviceCatalogItemRepository deviceRepo;
 
-    public IssuedDeviceRecordServiceImpl(IssuedDeviceRecordRepository repository) {
-        this.repository = repository;
+    public IssuedDeviceRecordServiceImpl(
+            IssuedDeviceRecordRepository issuedRepo,
+            EmployeeProfileRepository employeeRepo,
+            DeviceCatalogItemRepository deviceRepo) {
+
+        this.issuedRepo = issuedRepo;
+        this.employeeRepo = employeeRepo;
+        this.deviceRepo = deviceRepo;
     }
 
     @Override
     public IssuedDeviceRecord issueDevice(IssuedDeviceRecord record) {
         record.setIssuedDate(LocalDate.now());
         record.setStatus("ISSUED");
-        return repository.save(record);
+        return issuedRepo.save(record);
     }
 
     @Override
-    public IssuedDeviceRecord returnDevice(Long recordId) {
-        IssuedDeviceRecord record = repository.findById(recordId)
-                .orElseThrow(() -> new ResourceNotFoundException("Issued record not found"));
+    public IssuedDeviceRecord returnDevice(Long id) {
+        IssuedDeviceRecord rec = issuedRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Not found"));
 
-        if (record.getReturnedDate() != null) {
-            throw new BadRequestException("already returned");
+        if (rec.getReturnedDate() != null) {
+            throw new RuntimeException("already returned");
         }
 
-        record.setReturnedDate(LocalDate.now());
-        record.setStatus("RETURNED");
-        return repository.save(record);
+        rec.setReturnedDate(LocalDate.now());
+        rec.setStatus("RETURNED");
+        return issuedRepo.save(rec);
     }
 
     @Override
     public List<IssuedDeviceRecord> getIssuedDevicesByEmployee(Long employeeId) {
-        return repository.findAll()
-                .stream()
-                .filter(r -> r.getEmployeeId().equals(employeeId))
-                .toList();
+        return issuedRepo.findByEmployeeId(employeeId);
     }
 }
