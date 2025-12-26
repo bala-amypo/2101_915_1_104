@@ -1,8 +1,6 @@
 package com.example.demo.security;
 
-import com.example.demo.model.UserAccount;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 
 import java.nio.charset.StandardCharsets;
@@ -12,33 +10,39 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final Key key;
-    private final long validityMs;
+    private final long expirationMs;
 
-    public JwtTokenProvider(String secret, int validityMs) {
+    // EXACT constructor used in tests
+    public JwtTokenProvider(String secret, int expirationMs) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        this.validityMs = validityMs;
+        this.expirationMs = expirationMs;
     }
 
-    public String generateToken(UserAccount user) {
+    public String generateToken(com.example.demo.model.UserAccount user) {
         return Jwts.builder()
-                .claim("userId", user.getId())
-                .claim("email", user.getEmail())
-                .claim("role", user.getRole())
+                .setSubject(user.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + validityMs))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        } catch (Exception e) {
+        } catch (JwtException e) {
             return false;
         }
+    }
+
+    // REQUIRED BY TESTS
+    public String getUsername(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
     }
 }
