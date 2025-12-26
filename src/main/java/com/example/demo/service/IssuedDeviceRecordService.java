@@ -5,7 +5,11 @@ import java.util.List;
 
 public interface IssuedDeviceRecordService {
 
-    IssuedDeviceRecord create(IssuedDeviceRecord record);
+    IssuedDeviceRecord issueDevice(Long employeeId, Long deviceItemId);
+
+    IssuedDeviceRecord returnDevice(Long issuedRecordId);
+
+    List<IssuedDeviceRecord> getIssuedDevicesByEmployee(Long employeeId);
 
     List<IssuedDeviceRecord> getAll();
 }
