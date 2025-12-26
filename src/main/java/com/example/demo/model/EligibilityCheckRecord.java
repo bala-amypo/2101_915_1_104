@@ -12,34 +12,63 @@ public class EligibilityCheckRecord {
     private Long id;
 
     private Long employeeId;
+
     private Long deviceItemId;
+
     private Boolean isEligible;
+
     private String reason;
+
     private LocalDateTime checkedAt;
 
     @PrePersist
-    public void prePersist() {
+    public void onCreate() {
         this.checkedAt = LocalDateTime.now();
     }
 
-    // ✅ REQUIRED BY TESTS
-    public void setId(Long id) {
-        this.id = id;
+    // ===== GETTERS & SETTERS =====
+
+    public Long getId() {
+        return id;
     }
 
-    public Long getId() { return id; }
+    public Long getEmployeeId() {
+        return employeeId;
+    }
 
-    public Long getEmployeeId() { return employeeId; }
-    public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
 
-    public Long getDeviceItemId() { return deviceItemId; }
-    public void setDeviceItemId(Long deviceItemId) { this.deviceItemId = deviceItemId; }
+    public Long getDeviceItemId() {
+        return deviceItemId;
+    }
 
-    public Boolean getIsEligible() { return isEligible; }
-    public void setIsEligible(Boolean eligible) { isEligible = eligible; }
+    public void setDeviceItemId(Long deviceItemId) {
+        this.deviceItemId = deviceItemId;
+    }
 
-    public String getReason() { return reason; }
-    public void setReason(String reason) { this.reason = reason; }
+    public Boolean getIsEligible() {
+        return isEligible;
+    }
 
-    public LocalDateTime getCheckedAt() { return checkedAt; }
+    public void setIsEligible(Boolean eligible) {
+        isEligible = eligible;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public LocalDateTime getCheckedAt() {
+        return checkedAt;
+    }
+
+    public void setCheckedAt(LocalDateTime checkedAt) {
+        this.checkedAt = checkedAt;
+    }
 }

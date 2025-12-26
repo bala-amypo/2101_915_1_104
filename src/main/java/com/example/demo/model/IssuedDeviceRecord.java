@@ -19,7 +19,7 @@ public class IssuedDeviceRecord {
 
     private LocalDate returnedDate;
 
-    private String status; // ISSUED or RETURNED
+    private String status; // ISSUED / RETURNED
 
     // ===== GETTERS & SETTERS =====
 
