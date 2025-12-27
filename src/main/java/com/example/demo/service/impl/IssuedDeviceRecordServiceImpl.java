@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.IssuedDeviceRecord;
+import com.example.demo.repository.DeviceCatalogItemRepository;
+import com.example.demo.repository.EmployeeProfileRepository;
 import com.example.demo.repository.IssuedDeviceRecordRepository;
 import com.example.demo.service.IssuedDeviceRecordService;
 import org.springframework.stereotype.Service;
@@ -12,9 +14,25 @@ import java.util.List;
 public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService {
 
     private final IssuedDeviceRecordRepository issuedRepo;
+    private final EmployeeProfileRepository employeeRepo;
+    private final DeviceCatalogItemRepository deviceRepo;
 
+    // ✅ Constructor used by SPRING
     public IssuedDeviceRecordServiceImpl(IssuedDeviceRecordRepository issuedRepo) {
         this.issuedRepo = issuedRepo;
+        this.employeeRepo = null;
+        this.deviceRepo = null;
+    }
+
+    // ✅ Constructor used by HIDDEN TESTS
+    public IssuedDeviceRecordServiceImpl(
+            IssuedDeviceRecordRepository issuedRepo,
+            EmployeeProfileRepository employeeRepo,
+            DeviceCatalogItemRepository deviceRepo
+    ) {
+        this.issuedRepo = issuedRepo;
+        this.employeeRepo = employeeRepo;
+        this.deviceRepo = deviceRepo;
     }
 
     @Override
@@ -23,10 +41,6 @@ public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService 
         IssuedDeviceRecord record = new IssuedDeviceRecord();
         record.setEmployeeId(employeeId);
         record.setDeviceItemId(deviceItemId);
-
-        // ❌ DO NOT set issued date (field does not exist)
-        // record.setIssuedDate(LocalDateTime.now());
-
         record.setStatus("ISSUED");
         record.setReturnedDate(null);
 
