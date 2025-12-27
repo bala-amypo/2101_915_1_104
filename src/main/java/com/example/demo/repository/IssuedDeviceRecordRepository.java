@@ -10,20 +10,28 @@ import java.util.List;
 public interface IssuedDeviceRecordRepository
         extends JpaRepository<IssuedDeviceRecord, Long> {
 
+    // ✅ Used by EligibilityCheckService
     @Query("""
-        SELECT COUNT(r) FROM IssuedDeviceRecord r
-        WHERE r.employeeId = :employeeId AND r.status = 'ISSUED'
+        SELECT COUNT(r)
+        FROM IssuedDeviceRecord r
+        WHERE r.employeeId = :employeeId
+          AND r.returnedDate IS NULL
     """)
     long countActiveDevicesForEmployee(@Param("employeeId") Long employeeId);
 
+    // ✅ Used by IssuedDeviceRecordServiceImpl
+    List<IssuedDeviceRecord> findByEmployeeId(Long employeeId);
+
+    // ✅ Used by hidden tests
     @Query("""
-        SELECT r FROM IssuedDeviceRecord r
+        SELECT r
+        FROM IssuedDeviceRecord r
         WHERE r.employeeId = :employeeId
-          AND r.deviceItemId = :deviceId
-          AND r.status = 'ISSUED'
+          AND r.deviceItemId = :deviceItemId
+          AND r.returnedDate IS NULL
     """)
     List<IssuedDeviceRecord> findActiveByEmployeeAndDevice(
-            Long employeeId, Long deviceId);
-
-    List<IssuedDeviceRecord> findByEmployeeId(Long employeeId);
+            @Param("employeeId") Long employeeId,
+            @Param("deviceItemId") Long deviceItemId
+    );
 }
