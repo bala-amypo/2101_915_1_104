@@ -13,20 +13,10 @@ import java.util.List;
 @Service
 public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService {
 
-    private IssuedDeviceRecordRepository issuedRepo;
-    private EmployeeProfileRepository employeeRepo;
-    private DeviceCatalogItemRepository deviceRepo;
+    private final IssuedDeviceRecordRepository issuedRepo;
+    private final EmployeeProfileRepository employeeRepo;
+    private final DeviceCatalogItemRepository deviceRepo;
 
-    // ✅ REQUIRED by Spring (fallback)
-    public IssuedDeviceRecordServiceImpl() {
-    }
-
-    // ✅ Used by Spring DI
-    public IssuedDeviceRecordServiceImpl(IssuedDeviceRecordRepository issuedRepo) {
-        this.issuedRepo = issuedRepo;
-    }
-
-    // ✅ Used by hidden tests
     public IssuedDeviceRecordServiceImpl(
             IssuedDeviceRecordRepository issuedRepo,
             EmployeeProfileRepository employeeRepo,
@@ -38,27 +28,27 @@ public class IssuedDeviceRecordServiceImpl implements IssuedDeviceRecordService 
     }
 
     @Override
-    public IssuedDeviceRecord issueDevice(Long employeeId, Long deviceItemId) {
-
-        IssuedDeviceRecord record = new IssuedDeviceRecord();
-        record.setEmployeeId(employeeId);
-        record.setDeviceItemId(deviceItemId);
-        record.setStatus("ISSUED");
-        record.setReturnedDate(null);
-
-        return issuedRepo.save(record);
+    public IssuedDeviceRecord issueDevice(Long employeeId, Long deviceId) {
+        IssuedDeviceRecord r = new IssuedDeviceRecord();
+        r.setEmployeeId(employeeId);
+        r.setDeviceItemId(deviceId);
+        r.setStatus("ISSUED");
+        r.setIssuedDate(LocalDateTime.now());
+        return issuedRepo.save(r);
     }
 
     @Override
-    public IssuedDeviceRecord returnDevice(Long issuedRecordId) {
+    public IssuedDeviceRecord returnDevice(Long recordId) {
+        IssuedDeviceRecord r = issuedRepo.findById(recordId)
+                .orElseThrow(() -> new BadRequestException("Record not found"));
 
-        IssuedDeviceRecord record = issuedRepo.findById(issuedRecordId)
-                .orElseThrow(() -> new RuntimeException("Issued record not found"));
+        if ("RETURNED".equals(r.getStatus())) {
+            throw new BadRequestException("Device already returned");
+        }
 
-        record.setStatus("RETURNED");
-        record.setReturnedDate(LocalDateTime.now());
-
-        return issuedRepo.save(record);
+        r.setStatus("RETURNED");
+        r.setReturnedDate(LocalDateTime.now());
+        return issuedRepo.save(r);
     }
 
     @Override

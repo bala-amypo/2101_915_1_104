@@ -10,42 +10,42 @@ import java.util.Date;
 
 public class JwtTokenProvider {
 
-    private final Key key;
-    private final long expirationMs;
+    private final String secret;
+    private final long expiration;
 
-    public JwtTokenProvider(String secret, int expirationMs) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        this.expirationMs = expirationMs;
+    public JwtTokenProvider(String secret, long expiration) {
+        this.secret = secret;
+        this.expiration = expiration;
     }
 
     public String generateToken(UserAccount user) {
         return Jwts.builder()
-                .setSubject(user.getEmail()) // ✅ FIXED
+                .setSubject(user.getEmail())
                 .claim("role", user.getRole())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
-                .signWith(key, SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
                 .compact();
     }
 
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(token);
+                .setSigningKey(secret.getBytes(StandardCharsets.UTF_8))
+                .build()
+                .parseClaimsJws(token);
             return true;
-        } catch (JwtException e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
     public String getUsername(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(key)
+                .setSigningKey(secret.getBytes(StandardCharsets.UTF_8))
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
-                .getSubject(); // email
+                .getSubject();
     }
 }

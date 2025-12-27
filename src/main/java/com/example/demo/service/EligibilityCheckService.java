@@ -4,8 +4,6 @@ import com.example.demo.model.EligibilityCheckRecord;
 import java.util.List;
 
 public interface EligibilityCheckService {
-
-    EligibilityCheckRecord validateEligibility(Long employeeId, Long deviceItemId);
-
+    EligibilityCheckRecord validateEligibility(Long employeeId, Long deviceId);
     List<EligibilityCheckRecord> getChecksByEmployee(Long employeeId);
 }

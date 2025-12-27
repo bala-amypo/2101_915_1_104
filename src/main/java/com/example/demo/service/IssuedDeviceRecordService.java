@@ -4,10 +4,7 @@ import com.example.demo.model.IssuedDeviceRecord;
 import java.util.List;
 
 public interface IssuedDeviceRecordService {
-
-    IssuedDeviceRecord issueDevice(Long employeeId, Long deviceItemId);
-
-    IssuedDeviceRecord returnDevice(Long issuedRecordId);
-
+    IssuedDeviceRecord issueDevice(Long employeeId, Long deviceId);
+    IssuedDeviceRecord returnDevice(Long recordId);
     List<IssuedDeviceRecord> getIssuedDevicesByEmployee(Long employeeId);
 }
