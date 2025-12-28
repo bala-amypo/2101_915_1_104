@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
+
 import org.testng.annotations.Test;
 
 import java.time.LocalDateTime;
@@ -24,7 +24,6 @@ import static org.mockito.Mockito.when;
  * TestNG + Mockito based tests
  * IMPORTANT: NO @SpringBootTest here
  */
-@Listeners(TestResultListener.class)
 public class EmployeeEquipmentIssuancePolicyCheckerTests {
 
     @Mock
