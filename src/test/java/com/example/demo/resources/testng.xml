@@ -1,8 +1,0 @@
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="AllTests">
-    <test name="EmployeePolicyTests">
-        <classes>
-            <class name="com.example.demo.EmployeeEquipmentIssuancePolicyCheckerTests"/>
-        </classes>
-    </test>
-</suite>
