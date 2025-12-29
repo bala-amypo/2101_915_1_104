@@ -23,4 +23,16 @@ public class UserAccountServiceImpl implements UserAccountService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userAccountRepository.save(user);
     }
+
+    @Override
+    public UserAccount validateUser(String email, String password) {
+        UserAccount user = userAccountRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("Invalid email or password");
+        }
+
+        return user;
+    }
 }
