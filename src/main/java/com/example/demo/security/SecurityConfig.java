@@ -20,7 +20,7 @@ public class SecurityConfig {
                     "/swagger-ui.html",
                     "/error"
                 ).permitAll()
-                .requestMatchers("/api/**").permitAll()   // 🔥 THIS LINE FIXES 401
+                .requestMatchers("/api/**").permitAll() 
                 .anyRequest().authenticated()
             );
 
