@@ -19,7 +19,7 @@ public class EmployeeProfileController {
 
     // CREATE
     @PostMapping
-    public EmployeeProfile create(@Valid @RequestBody EmployeeProfile employee) {
+    public EmployeeProfile create( @RequestBody EmployeeProfile employee) {
         return service.createEmployee(employee); // ✅ FIXED
     }
 
